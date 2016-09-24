@@ -42,8 +42,55 @@ Class Response{
       $xml .= "</root>";
 
       return $xml;
-
     }
+
+    /*
+     * xml 数据格式
+     * param integer $code 状态码
+     * param string $message 提示信息
+     * param array $data 数据
+     * return string
+     */
+
+    public static function xmlEncode($code,$message,$data=array())
+    {
+      if(!is_numeric($code)){
+        return '';
+      }
+      $result = array(
+           'code'     => $code,
+           'message'  => $message,
+           'data'     => $data
+      );
+      header('Content-Type:text/xml');
+      $xml  = "<?xml version='1.0' encoding='UTF-8'?>\n";
+      $xml .= "<root>\n";
+
+      $xml .= self::xmlToEncode($result);
+
+      $xml .= "</root>\n";
+
+      return $xml;
+    }
+
+
+    public static function xmlToEncode($data)
+    {
+        $xml = ""; 
+        $attr = "";
+        foreach ($data as $key => $value) {
+          if(is_numeric($key))
+          {
+            $attr = "id = '{$key}'";
+            $key = "item";
+          }
+           $xml  .= "<{$key} $attr>\n";
+           $xml  .= is_array($value) ? self::xmlToEncode($value): $value;
+           $xml  .= "</{$key}>\n"; 
+        }
+        return $xml;
+    }
+
 
 
 }
