@@ -13,4 +13,8 @@
 
  //echo Response::xml();
 
- echo Response::xmlEncode('200','sucess',$data);
+// echo Response::xmlEncode('200','sucess',$data);
+
+
+ echo Response::show(200,'sucess',$data,'array');
+

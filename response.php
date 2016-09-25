@@ -1,6 +1,44 @@
 <?php
 Class Response{
 
+
+    /*
+     * 综合方式输出数据格式
+     * param integer $code 状态码
+     * param string $message 提示信息
+     * param array $data 数据
+     * param string $type 类型
+     * return string
+     */
+
+
+  public static function show($code,$message='',$data=array(),$type='json')
+  {
+    if (!is_numeric($code)) {
+        return '';
+    }
+    $result = array(
+        'code'    => $code,
+        'message' => $message,
+        'data'    => $data
+    );
+
+    //$type = isset($_GET['format']) ? $_GET['format'] : 'json';
+    if($type == 'json'){
+      return self :: json($code,$message,$data);
+      exit();
+    }elseif ($type == 'array') {
+      //调试模式
+      var_dump($result);
+    }elseif ($type == 'xml') {
+      return self :: xmlEncode($code,$message,$data);
+      exit();
+    }else{
+      //根据业务可在添加逻辑
+    }
+
+  }
+
     /*
      * json 数据格式
      * param integer $code 状态码
