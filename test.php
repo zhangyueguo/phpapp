@@ -1,7 +1,8 @@
 <?php
 //header('content-type:text/html;charset=utf8');
 
- require_once "./response.php";
+ //require_once "./response.php";
+ require_once "./file.php";
 
  $data = array(
       'id'    => 2,
@@ -16,5 +17,14 @@
 // echo Response::xmlEncode('200','sucess',$data);
 
 
- echo Response::show(200,'sucess',$data,'array');
+ //echo Response::show(200,'sucess',$data,'array');
 
+$file = new file();
+
+ if($file ->cacheDate('index_mook1','del'))
+ {
+   var_dump($file->cacheDate('index_mook1','del'));
+    echo 'sucess';
+ }else{
+   echo "error";
+ }

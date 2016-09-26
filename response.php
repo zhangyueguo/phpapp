@@ -1,7 +1,6 @@
 <?php
 Class Response{
 
-
     /*
      * 综合方式输出数据格式
      * param integer $code 状态码
