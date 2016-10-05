@@ -43,7 +43,10 @@
      	self::$con = mysql_connect($this->config['host'],$this->config['user'],$this->config['password']);
 
      	if (!self::$con) {
-     		die('数据库连接失败'.mysql_errno());
+         throw new Exception('数据库连接失败'.mysql_errno());
+         
+           
+     		//die('数据库连接失败'.mysql_errno());
      	}
 
      	mysql_select_db($this->config['databases']);
@@ -59,7 +62,7 @@
 
   //var_dump(Db::getinstance());exit;
 
-  $con = Db::getinstance()->connect();
+  /*$con = Db::getinstance()->connect();
 
   //var_dump($con);exit;
 
@@ -67,7 +70,7 @@
 
   $res = mysql_query($sql,$con);
 
-  var_dump($res);
+  var_dump($res);*/
 
 ?>
 

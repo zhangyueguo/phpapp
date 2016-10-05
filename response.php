@@ -22,15 +22,15 @@ Class Response{
         'data'    => $data
     );
 
-    //$type = isset($_GET['format']) ? $_GET['format'] : 'json';
+    $type = isset($_GET['format']) ? $_GET['format'] : 'json';
     if($type == 'json'){
-      return self :: json($code,$message,$data);
+      echo self :: json($code,$message,$data);
       exit();
     }elseif ($type == 'array') {
       //调试模式
       var_dump($result);
     }elseif ($type == 'xml') {
-      return self :: xmlEncode($code,$message,$data);
+      echo self :: xmlEncode($code,$message,$data);
       exit();
     }else{
       //根据业务可在添加逻辑
