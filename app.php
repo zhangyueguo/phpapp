@@ -1,6 +1,9 @@
 <?php
+
+   //echo phpinfo();exit;
    require_once('./response.php');
    require_once('./Db.php');
+   require_once('./file.php');
 
    $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
@@ -16,23 +19,32 @@
 
    $offset = ($page-1)*$pagesize;
 
-   $sql = "select * from ceshi where status = 1 order by id desc limit ".$offset.",".$pagesize;
+   $sql = "select * from diqu where parentid = 0 order by id desc limit ".$offset.",".$pagesize;
 
-   try{
 
-    $con = Db::getinstance()->connect();
-    }catch(Exception $e){
-    	return response::show(440,'数据库连接失败');
-    }
+   $cache = new file();
+   $results = array();
 
-     $res = mysql_query($sql,$con);
+if(!$results = $cache->cacheDate('index_mk'.$page.'-'.$pagesize)) {
+        try {
 
-     $results = array();
+            $con = Db::getinstance()->connect();
+        } catch (Exception $e) {
+            return response::show(440, '数据库连接失败');
+        }
 
-     while($result = mysql_fetch_assoc($res))
-     {
-     	$results[] = $result;
-     }
+        $res = mysql_query($sql, $con);
+
+        $results = array();
+
+        while ($result = mysql_fetch_assoc($res)) {
+            $results[] = $result;
+        }
+
+      if($results){
+          $cache->cacheDate('index_mk'.$page.'-'.$pagesize,$results,1200);
+      }
+}
 
      //返回接口数据
 
