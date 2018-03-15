@@ -24,4 +24,4 @@
   */1 * * * * php /data/www/ap.php  意思是每分钟执行ap.php
 
 
-
+7.10.创建 定时任务  EDITOR=vim crontab -e  临时只用一次
